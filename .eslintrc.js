@@ -24,6 +24,7 @@ module.exports = {
     '@typescript-eslint'
   ],
   rules: {
+    'no-unused-vars': 'error',
   },
   settings: {
     react: {
