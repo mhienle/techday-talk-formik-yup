@@ -25,10 +25,11 @@ module.exports = {
   ],
   rules: {
     'no-unused-vars': 'error',
+    'react/prop-types': 'off',
   },
   settings: {
     react: {
       version: "detect",
     },
   }
-}
+};

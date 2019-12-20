@@ -4,16 +4,19 @@ import { Field, Form, FormikProps, withFormik, ErrorMessage } from 'formik';
 import { Debug } from './Debug';
 import * as yup from 'yup';
 
-interface Form1Values {
+interface Form2Values {
     name?: string;
     email?: string;
     age?: number;
 }
 
-const Form1: React.FC<FormikProps<Form1Values>> = props => {
+type Form2Props = Form2Values & {
+    emailRequired?: boolean;
+}
+
+const Form2View: React.FC<FormikProps<Form2Props>> = props => {
     return (
         <div>
-            <h1>Einfache Validierung</h1>
             <Form>
                 <div>
                     <label htmlFor="name">Name</label>
@@ -43,8 +46,8 @@ const Form1: React.FC<FormikProps<Form1Values>> = props => {
     );
 };
 
-export default withFormik<Form1Values, Form1Values>({
-    mapPropsToValues: (props: Form1Values) => {
+const Form2 = withFormik<Form2Props, Form2Values>({
+    mapPropsToValues: (props: Form2Props): Form2Values => {
         return {
             name: props.name,
             email: props.email,
@@ -52,14 +55,18 @@ export default withFormik<Form1Values, Form1Values>({
         };
     },
     isInitialValid: false,
-    validationSchema: yup.object().shape({
+    validationSchema: (props: Form2Props) => yup.object().shape({
         name: yup
             .string()
             .required('Name benötigt'),
-        email: yup
-            .string()
-            .email('Ungültige Email-Adresse')
-            .required('Email-Adresse benötigt'),
+        email: props.emailRequired ?
+            yup
+                .string()
+                .email('Ungültige Email-Adresse')
+                .required('Email-Adresse benötigt') :
+            yup
+                .string()
+                .email('Ungültige Email-Adresse'),
         age: yup
             .number()
             .typeError('Zahl erwartet')
@@ -72,4 +79,18 @@ export default withFormik<Form1Values, Form1Values>({
             actions.setSubmitting(false);
         }, 2000);
     },
-})(Form1);
+})(Form2View);
+
+const Page2 = () => {
+    return (
+        <div>
+            <h1>Validierung basierend auf props</h1>
+            <h2>Email benötigt</h2>
+            <Form2 emailRequired={true}/>
+            <h2>Email nicht benötigt</h2>
+            <Form2 emailRequired={false}/>
+        </div>
+    );
+};
+
+export default Page2;

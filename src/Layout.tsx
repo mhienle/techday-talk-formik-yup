@@ -15,6 +15,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Switch, Route, NavLink } from "react-router-dom";
 import Form1 from './Form1';
+import Page2 from './Form2';
 
 const drawerWidth = 240;
 
@@ -144,6 +145,11 @@ export default function Layout() {
               <ListItemText primary='Form 1' />
             </ListItem>
           </NavLink>
+          <NavLink to='/2'>
+            <ListItem button key={'Form2'}>
+              <ListItemText primary='Form 2' />
+            </ListItem>
+          </NavLink>
         </List>
       </Drawer>
       <main
@@ -155,6 +161,7 @@ export default function Layout() {
         <Switch>
           <Route exact path="/" component={Welcome}/>
           <Route exact path="/1" component={Form1}/>
+          <Route exact path="/2" component={Page2}/>
           <Route component={PageNotFound}/>
         </Switch>
       </main>
