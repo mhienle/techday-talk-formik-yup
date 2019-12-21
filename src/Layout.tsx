@@ -18,6 +18,7 @@ import { Switch, Route, NavLink } from "react-router-dom";
 import Page1 from './Page1';
 import Page2 from './Page2';
 import Page3 from "./Page3";
+import Page4 from "./Page4";
 
 const drawerWidth = 240;
 
@@ -160,6 +161,11 @@ export default function Layout() {
               <ListItemText primary='Form 3' />
             </ListItem>
           </NavLink>
+          <NavLink to='/4'>
+            <ListItem button key={'Form4'}>
+              <ListItemText primary='Form 4' />
+            </ListItem>
+          </NavLink>
         </List>
       </Drawer>
       <main
@@ -173,6 +179,7 @@ export default function Layout() {
           <Route exact path="/1" component={Page1}/>
           <Route exact path="/2" component={Page2}/>
           <Route exact path="/3" component={Page3}/>
+          <Route exact path="/4" component={Page4}/>
           <Route component={PageNotFound}/>
         </Switch>
       </main>
