@@ -13,6 +13,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Typography from '@material-ui/core/Typography';
 import { Switch, Route, NavLink } from "react-router-dom";
 import Page1 from './Page1';
 import Page2 from './Page2';
@@ -117,6 +118,9 @@ export default function Layout() {
           >
             <MenuIcon />
           </IconButton>
+          <Typography variant="h6" noWrap>
+            formik und yup
+          </Typography>
         </Toolbar>
       </AppBar>
       <Drawer

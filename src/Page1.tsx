@@ -14,19 +14,19 @@ const Form1View: React.FC<FormikProps<Form1Values>> = props => {
     return (
         <Form>
             <div>
-                <label htmlFor="name">Name</label>
+                <label htmlFor="name">Name </label>
                 <Field name="name" type="text" disabled={props.isSubmitting}/>
                 <ErrorMessage name="name" />
             </div>
 
             <div>
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">Email </label>
                 <Field name="email" type="email" disabled={props.isSubmitting} />
                 <ErrorMessage name="email" />
             </div>
 
             <div>
-                <label htmlFor="age">Alter</label>
+                <label htmlFor="age">Alter </label>
                 <Field name="age" type="number" disabled={props.isSubmitting} />
                 <ErrorMessage name="age" />
             </div>
