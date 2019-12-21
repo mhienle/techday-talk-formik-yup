@@ -14,8 +14,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Switch, Route, NavLink } from "react-router-dom";
-import Form1 from './Form1';
-import Page2 from './Form2';
+import Page1 from './Page1';
+import Page2 from './Page2';
 
 const drawerWidth = 240;
 
@@ -160,7 +160,7 @@ export default function Layout() {
         <div className={classes.drawerHeader} />
         <Switch>
           <Route exact path="/" component={Welcome}/>
-          <Route exact path="/1" component={Form1}/>
+          <Route exact path="/1" component={Page1}/>
           <Route exact path="/2" component={Page2}/>
           <Route component={PageNotFound}/>
         </Switch>
