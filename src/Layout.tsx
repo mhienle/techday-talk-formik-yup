@@ -17,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import { Switch, Route, NavLink } from "react-router-dom";
 import Page1 from './Page1';
 import Page2 from './Page2';
+import Page3 from "./Page3";
 
 const drawerWidth = 240;
 
@@ -154,6 +155,11 @@ export default function Layout() {
               <ListItemText primary='Form 2' />
             </ListItem>
           </NavLink>
+          <NavLink to='/3'>
+            <ListItem button key={'Form3'}>
+              <ListItemText primary='Form 3' />
+            </ListItem>
+          </NavLink>
         </List>
       </Drawer>
       <main
@@ -166,6 +172,7 @@ export default function Layout() {
           <Route exact path="/" component={Welcome}/>
           <Route exact path="/1" component={Page1}/>
           <Route exact path="/2" component={Page2}/>
+          <Route exact path="/3" component={Page3}/>
           <Route component={PageNotFound}/>
         </Switch>
       </main>
