@@ -1,22 +1,22 @@
-import React from 'react';
-import clsx from 'clsx';
-import { makeStyles, useTheme, createStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
+import React from "react";
+import clsx from "clsx";
+import { makeStyles, useTheme, createStyles } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import Typography from "@material-ui/core/Typography";
 import { Switch, Route, NavLink } from "react-router-dom";
-import Page1 from './Page1';
-import Page2 from './Page2';
+import Page1 from "./Page1";
+import Page2 from "./Page2";
 import Page3 from "./Page3";
 import Page4 from "./Page4";
 
@@ -30,62 +30,62 @@ function PageNotFound() {
   return <h1>Not Found</h1>;
 }
 
-const useStyles = makeStyles((theme) =>
+const useStyles = makeStyles(theme =>
   createStyles({
     root: {
-      display: 'flex',
+      display: "flex"
     },
     appBar: {
-      transition: theme.transitions.create(['margin', 'width'], {
+      transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
+        duration: theme.transitions.duration.leavingScreen
+      })
     },
     appBarShift: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
-      transition: theme.transitions.create(['margin', 'width'], {
+      transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
+        duration: theme.transitions.duration.enteringScreen
+      })
     },
     menuButton: {
-      marginRight: theme.spacing(2),
+      marginRight: theme.spacing(2)
     },
     hide: {
-      display: 'none',
+      display: "none"
     },
     drawer: {
       width: drawerWidth,
-      flexShrink: 0,
+      flexShrink: 0
     },
     drawerPaper: {
-      width: drawerWidth,
+      width: drawerWidth
     },
     drawerHeader: {
-      display: 'flex',
-      alignItems: 'center',
+      display: "flex",
+      alignItems: "center",
       padding: theme.spacing(0, 1),
       ...theme.mixins.toolbar,
-      justifyContent: 'flex-end',
+      justifyContent: "flex-end"
     },
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
-      transition: theme.transitions.create('margin', {
+      transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
+        duration: theme.transitions.duration.leavingScreen
       }),
-      marginLeft: -drawerWidth,
+      marginLeft: -drawerWidth
     },
     contentShift: {
-      transition: theme.transitions.create('margin', {
+      transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
+        duration: theme.transitions.duration.enteringScreen
       }),
-      marginLeft: 0,
-    },
-  }),
+      marginLeft: 0
+    }
+  })
 );
 
 export default function Layout() {
@@ -107,7 +107,7 @@ export default function Layout() {
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
+          [classes.appBarShift]: open
         })}
       >
         <Toolbar>
@@ -131,56 +131,60 @@ export default function Layout() {
         anchor="left"
         open={open}
         classes={{
-          paper: classes.drawerPaper,
+          paper: classes.drawerPaper
         }}
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
           </IconButton>
         </div>
         <Divider />
         <List>
-          <NavLink to='/'>
-            <ListItem button key={'Start'}>
-              <ListItemText primary='Start' />
+          <NavLink to="/">
+            <ListItem button key={"Start"}>
+              <ListItemText primary="Start" />
             </ListItem>
           </NavLink>
-          <NavLink to='/1'>
-            <ListItem button key={'Form1'}>
-              <ListItemText primary='Form 1' />
+          <NavLink to="/1">
+            <ListItem button key={"Form1"}>
+              <ListItemText primary="Form 1" />
             </ListItem>
           </NavLink>
-          <NavLink to='/2'>
-            <ListItem button key={'Form2'}>
-              <ListItemText primary='Form 2' />
+          <NavLink to="/2">
+            <ListItem button key={"Form2"}>
+              <ListItemText primary="Form 2" />
             </ListItem>
           </NavLink>
-          <NavLink to='/3'>
-            <ListItem button key={'Form3'}>
-              <ListItemText primary='Form 3' />
+          <NavLink to="/3">
+            <ListItem button key={"Form3"}>
+              <ListItemText primary="Form 3" />
             </ListItem>
           </NavLink>
-          <NavLink to='/4'>
-            <ListItem button key={'Form4'}>
-              <ListItemText primary='Form 4' />
+          <NavLink to="/4">
+            <ListItem button key={"Form4"}>
+              <ListItemText primary="Form 4" />
             </ListItem>
           </NavLink>
         </List>
       </Drawer>
       <main
         className={clsx(classes.content, {
-          [classes.contentShift]: open,
+          [classes.contentShift]: open
         })}
       >
         <div className={classes.drawerHeader} />
         <Switch>
-          <Route exact path="/" component={Welcome}/>
-          <Route exact path="/1" component={Page1}/>
-          <Route exact path="/2" component={Page2}/>
-          <Route exact path="/3" component={Page3}/>
-          <Route exact path="/4" component={Page4}/>
-          <Route component={PageNotFound}/>
+          <Route exact path="/" component={Welcome} />
+          <Route exact path="/1" component={Page1} />
+          <Route exact path="/2" component={Page2} />
+          <Route exact path="/3" component={Page3} />
+          <Route exact path="/4" component={Page4} />
+          <Route component={PageNotFound} />
         </Switch>
       </main>
     </div>
