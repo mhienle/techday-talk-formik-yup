@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+
+    <!-- FIXME -->
+    <title>TNG Präsentationen mit Reveal.js</title>
+
+    <!-- FIXME -->
+    <meta name="description" content="Der Inhalt des Vortrags">
+    <meta name="author" content="Die Autoren">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="style/presentation.css">
+
+</head>
+
+<!--
+  Wofür stehen die CSS-Klassen?
+  charred: Charred-Trail-Plugin aktivieren,
+  auto-fragment: alle <li> innerhalb von <ul> und <ol> in Fragments umwandeln, d.h. bei Tastendruck erst einblenden
+  with-footer: Ein Footer wird angezeigt
+-->
+<body class="charred auto-fragment with-footer">
+
+<div class="i18n">
+    <!-- FIXME: hier wenn gewünscht die Überschrift der Abschnitts-Übersichtseite ändern -->
+    <div class="section-overview"><h1>Übersicht</h1></div>
+</div>
+
+<div class="footer not-printed">
+    <div style="margin-left: 20px;">
+        <img src="img/tng/tng.svg" class="logo" />
+    </div>
+    <div>TNG Präsentationen mit Reveal.js</div>
+    <div class="right">2019-02-23</div>
+</div>
+
+<!-- Hauptteil -->
+
+<!-- Falls ihr eure Präsentation in HTML schreiben wollt -->
+<section data-external-replace="presentation.html"></section>
+
+<!-- Falls ihr eure Präsentation in Markdown schreiben wollt  -->
+<!--
+<section data-markdown="example.md"
+         data-separator="----"
+         data-separator-vertical="---"
+         data-separator-notes="^Note:"
+         data-charset="utf-8">
+</section>
+-->
+
+<!-- Ende Hauptteil -->
+
+<script src="src/client/presentation.js"></script>
+
+</body>
+</html>
