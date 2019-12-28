@@ -4,11 +4,11 @@ import {
   Field,
   Form,
   FormikProps,
-  ErrorMessage,
   Formik,
   FieldArray,
   ArrayHelpers
 } from "formik";
+import ErrorMessage from "./ErrorMessage";
 import { Debug } from "./Debug";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 

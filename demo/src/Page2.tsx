@@ -1,5 +1,6 @@
 import React from "react";
-import { Field, Form, FormikProps, ErrorMessage, Formik } from "formik";
+import { Field, Form, FormikProps, Formik } from "formik";
+import ErrorMessage from "./ErrorMessage";
 import { Debug } from "./Debug";
 import * as yup from "yup";
 import { Divider } from "@material-ui/core";
