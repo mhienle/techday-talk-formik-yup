@@ -67,9 +67,8 @@ const Form5: React.FC<Form5Values> = () => {
             <ErrorMessage name="name" />
           </div>
 
-          <FieldArray
-            name="friends"
-            render={(arrayHelpers: ArrayHelpers) => {
+          <FieldArray name="friends">
+            {(arrayHelpers: ArrayHelpers) => {
               const addFriend = () =>
                 arrayHelpers.push({ name: "", email: "" });
               const removeFriend = (index: number) =>
@@ -111,7 +110,7 @@ const Form5: React.FC<Form5Values> = () => {
                 </div>
               );
             }}
-          />
+          </FieldArray>
 
           <button type="submit" disabled={props.isSubmitting || !props.isValid}>
             Speichern
