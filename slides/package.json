@@ -1,5 +1,5 @@
 {
-  "name": "techday-talk-formik-yup",
+  "name": "slides",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,18 +8,8 @@
     "start": "node node_modules/tng-reveal-template/src/server/server.js",
     "print": "node node_modules/tng-reveal-template/src/server/print.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mhienle/techday-talk-formik-yup.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/mhienle/techday-talk-formik-yup/issues"
-  },
-  "homepage": "https://github.com/mhienle/techday-talk-formik-yup#readme",
+  "author": "Michael Hienle",
   "dependencies": {
-    "tng-reveal-template": "git+ssh://git@bitbucket.int.tngtech.com:122/rpt/presentation-template.git"
+    "tng-reveal-template": "git+https://bitbucket.int.tngtech.com/scm/rpt/presentation-template.git"
   }
 }
