@@ -14,12 +14,12 @@ const Form4: React.FC<Form4Values> = () => {
       initialValues={{}}
       validateOnMount={true}
       validate={(values: Form4Values) => {
-        return {
-          bool1:
-            (values.bool1 && values.bool2) || (!values.bool1 && !values.bool2)
-              ? "Es muss genau eins der beiden Felder aktiv sein"
-              : undefined
-        };
+        return (values.bool1 && values.bool2) ||
+          (!values.bool1 && !values.bool2)
+          ? {
+              bool1: "Es muss genau eins der beiden Felder aktiv sein"
+            }
+          : undefined;
       }}
       onSubmit={(values, actions) => {
         setTimeout(() => {
