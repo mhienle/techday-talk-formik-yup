@@ -14,7 +14,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
-import { Switch, Route, NavLink } from "react-router-dom";
+import { Switch, Route, NavLink, Redirect } from "react-router-dom";
 import Page1 from "./Page1";
 import Page2 from "./Page2";
 import Page3 from "./Page3";
@@ -22,10 +22,6 @@ import Page4 from "./Page4";
 import Page5 from "./Page5";
 
 const drawerWidth = 240;
-
-function Welcome() {
-  return <h1>Welcome!</h1>;
-}
 
 function PageNotFound() {
   return <h1>Not Found</h1>;
@@ -146,11 +142,6 @@ export default function Layout() {
         </div>
         <Divider />
         <List>
-          <NavLink to="/">
-            <ListItem button key={"Start"}>
-              <ListItemText primary="Start" />
-            </ListItem>
-          </NavLink>
           <NavLink to="/1">
             <ListItem button key={"Form1"}>
               <ListItemText primary="Form 1" />
@@ -185,7 +176,7 @@ export default function Layout() {
       >
         <div className={classes.drawerHeader} />
         <Switch>
-          <Route exact path="/" component={Welcome} />
+          <Route exact path="/" component={() => <Redirect to={"/1"} />} />
           <Route exact path="/1" component={Page1} />
           <Route exact path="/2" component={Page2} />
           <Route exact path="/3" component={Page3} />
