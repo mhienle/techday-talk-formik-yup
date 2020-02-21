@@ -1,9 +1,6 @@
 import React from "react";
-import { Field, Form, FormikProps, Formik } from "formik";
-import ErrorMessage from "./ErrorMessage";
-import { Debug } from "./Debug";
 import * as yup from "yup";
-import { Divider } from "@material-ui/core";
+import { useForm } from "react-hook-form";
 
 interface Form1Values {
   name?: string;
@@ -12,61 +9,51 @@ interface Form1Values {
 }
 
 const Form1: React.FC<Form1Values> = props => {
+  const onSubmit = (data: Form1Values) => console.log(data);
+  const { handleSubmit, register, errors } = useForm<Form1Values>({
+    validationSchema: yup.object().shape({
+      name: yup.string().required("Name benötigt"),
+      email: yup
+        .string()
+        .email("Ungültige Email-Adresse")
+        .required("Email-Adresse benötigt"),
+      age: yup
+        .number()
+        .typeError("Zahl erwartet")
+        .moreThan(0, "Alter muss größer als 0 sein")
+        .required("Alter benötigt")
+    })
+  });
   return (
-    <Formik
-      initialValues={{
-        name: props.name,
-        email: props.email,
-        age: props.age
-      }}
-      validationSchema={yup.object().shape({
-        name: yup.string().required("Name benötigt"),
-        email: yup
-          .string()
-          .email("Ungültige Email-Adresse")
-          .required("Email-Adresse benötigt"),
-        age: yup
-          .number()
-          .typeError("Zahl erwartet")
-          .moreThan(0, "Alter muss größer als 0 sein")
-          .required("Alter benötigt")
-      })}
-      validateOnMount={true}
-      onSubmit={(values, actions) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          actions.setSubmitting(false);
-        }, 2000);
-      }}
-    >
-      {(props: FormikProps<Form1Values>) => (
-        <Form>
-          <div>
-            <label htmlFor="name">Name </label>
-            <Field name="name" type="text" disabled={props.isSubmitting} />
-            <ErrorMessage name="name" />
-          </div>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div>
+        <label htmlFor="name">Name </label>
+        <input name="name" ref={register} defaultValue={props.name} />
+        {errors.name && errors.name.message}
+      </div>
+      <div>
+        <label htmlFor="email">Email </label>
+        <input
+          name="email"
+          type="email"
+          ref={register}
+          defaultValue={props.email}
+        />
+        {errors.email && errors.email.message}
+      </div>
+      <div>
+        <label htmlFor="age">Alter </label>
+        <input
+          name="age"
+          type="number"
+          ref={register}
+          defaultValue={props.age}
+        />
+        {errors.age && errors.age.message}
+      </div>
 
-          <div>
-            <label htmlFor="email">Email </label>
-            <Field name="email" type="email" disabled={props.isSubmitting} />
-            <ErrorMessage name="email" />
-          </div>
-
-          <div>
-            <label htmlFor="age">Alter </label>
-            <Field name="age" type="number" disabled={props.isSubmitting} />
-            <ErrorMessage name="age" />
-          </div>
-
-          <button type="submit" disabled={props.isSubmitting || !props.isValid}>
-            Speichern
-          </button>
-
-          <Debug />
-        </Form>
-      )}
-    </Formik>
+      <input type="submit" />
+    </form>
   );
 };
 
@@ -77,11 +64,9 @@ const Page1 = () => {
   return (
     <div>
       <h1>Einfache Validierung</h1>
-      <Divider />
 
       <h2>Initial leeres Form</h2>
       <Form1 />
-      <Divider />
 
       <h2>Vorausgefülltes Form</h2>
       <Form1 {...initialData} />
