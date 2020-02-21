@@ -20,6 +20,7 @@ import Page2 from "./Page2";
 import Page3 from "./Page3";
 import Page4 from "./Page4";
 import Page5 from "./Page5";
+import Page6 from "./Page6";
 
 const drawerWidth = 240;
 
@@ -167,6 +168,11 @@ export default function Layout() {
               <ListItemText primary="Form 5" />
             </ListItem>
           </NavLink>
+          <NavLink to="/6">
+            <ListItem button key={"Form6"}>
+              <ListItemText primary="Form 6" />
+            </ListItem>
+          </NavLink>
         </List>
       </Drawer>
       <main
@@ -182,6 +188,7 @@ export default function Layout() {
           <Route exact path="/3" component={Page3} />
           <Route exact path="/4" component={Page4} />
           <Route exact path="/5" component={Page5} />
+          <Route exact path="/6" component={Page6} />
           <Route component={PageNotFound} />
         </Switch>
       </main>
