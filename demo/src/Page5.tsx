@@ -69,8 +69,10 @@ const Form5: React.FC<Form5Values> = () => {
 
           <FieldArray name="friends">
             {(arrayHelpers: ArrayHelpers) => {
-              const addFriend = () =>
+              const addFriend = async () => {
                 arrayHelpers.push({ name: "", email: "" });
+                setTimeout(async () => await props.validateForm()); // to enforce updating isValid...
+              };
               const removeFriend = (index: number) =>
                 arrayHelpers.remove(index);
 
