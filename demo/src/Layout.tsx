@@ -145,32 +145,32 @@ export default function Layout() {
         <List>
           <NavLink to="/1">
             <ListItem button key={"Form1"}>
-              <ListItemText primary="Form 1" />
+              <ListItemText primary="Validierung..." />
             </ListItem>
           </NavLink>
           <NavLink to="/2">
             <ListItem button key={"Form2"}>
-              <ListItemText primary="Form 2" />
+              <ListItemText primary="...über props" />
             </ListItem>
           </NavLink>
           <NavLink to="/3">
             <ListItem button key={"Form3"}>
-              <ListItemText primary="Form 3" />
+              <ListItemText primary="...über values" />
             </ListItem>
           </NavLink>
           <NavLink to="/4">
             <ListItem button key={"Form4"}>
-              <ListItemText primary="Form 4" />
+              <ListItemText primary="...über Kreuz" />
             </ListItem>
           </NavLink>
           <NavLink to="/5">
             <ListItem button key={"Form5"}>
-              <ListItemText primary="Form 5" />
+              <ListItemText primary="FieldArrays" />
             </ListItem>
           </NavLink>
           <NavLink to="/6">
             <ListItem button key={"Form6"}>
-              <ListItemText primary="Form 6" />
+              <ListItemText primary="Readonly Forms" />
             </ListItem>
           </NavLink>
         </List>
