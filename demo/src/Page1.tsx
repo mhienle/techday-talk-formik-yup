@@ -76,7 +76,7 @@ const Page1 = () => {
   };
   return (
     <div>
-      <h1>Einfache Validierung</h1>
+      <h1>Einfache yup-Validierung</h1>
       <Divider />
 
       <h2>Initial leeres Form</h2>

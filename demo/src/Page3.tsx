@@ -2,41 +2,25 @@ import React from "react";
 import { Field, Form, FormikProps, Formik } from "formik";
 import ErrorMessage from "./ErrorMessage";
 import { Debug } from "./Debug";
-import * as yup from "yup";
 
 interface Form3Values {
-  name?: string;
-  emailRequired?: boolean;
-  email?: string;
-  age?: number;
+  bool1?: boolean;
+  bool2?: boolean;
 }
 
-const Form3: React.FC<Form3Values> = props => {
-  const validationSchema = yup.object().shape({
-    name: yup.string().required("Name benötigt"),
-    email: yup.mixed().when("emailRequired", (emailRequired: boolean) =>
-      emailRequired
-        ? yup
-            .string()
-            .email("Ungültige Email-Adresse")
-            .required("Email-Adresse benötigt")
-        : yup.string().email("Ungültige Email-Adresse")
-    ),
-    age: yup
-      .number()
-      .typeError("Zahl erwartet")
-      .moreThan(0, "Alter muss größer als 0 sein")
-      .required("Alter benötigt")
-  });
+const Form3: React.FC<Form3Values> = () => {
   return (
     <Formik
-      initialValues={{
-        name: props.name,
-        email: props.email,
-        age: props.age
-      }}
-      validationSchema={validationSchema}
+      initialValues={{}}
       validateOnMount={true}
+      validate={(values: Form3Values) => {
+        return (values.bool1 && values.bool2) ||
+          (!values.bool1 && !values.bool2)
+          ? {
+              bool1: "Es muss genau eins der beiden Felder aktiv sein"
+            }
+          : undefined;
+      }}
       onSubmit={(values, actions) => {
         setTimeout(() => {
           alert(JSON.stringify(values, null, 2));
@@ -47,30 +31,15 @@ const Form3: React.FC<Form3Values> = props => {
       {(props: FormikProps<Form3Values>) => (
         <Form>
           <div>
-            <label htmlFor="name">Name </label>
-            <Field name="name" type="text" disabled={props.isSubmitting} />
-            <ErrorMessage name="name" />
+            <label htmlFor="bool1">Bool1 </label>
+            <Field name="bool1" type="checkbox" disabled={props.isSubmitting} />
+            <ErrorMessage name="bool1" />
           </div>
 
           <div>
-            <label htmlFor="emailRequired">Email benötigt? </label>
-            <Field
-              name="emailRequired"
-              type="checkbox"
-              disabled={props.isSubmitting}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="email">Email </label>
-            <Field name="email" type="email" disabled={props.isSubmitting} />
-            <ErrorMessage name="email" />
-          </div>
-
-          <div>
-            <label htmlFor="age">Alter </label>
-            <Field name="age" type="number" disabled={props.isSubmitting} />
-            <ErrorMessage name="age" />
+            <label htmlFor="bool2">Bool2 </label>
+            <Field name="bool2" type="checkbox" disabled={props.isSubmitting} />
+            <ErrorMessage name="bool2" />
           </div>
 
           <button type="submit" disabled={props.isSubmitting || !props.isValid}>
@@ -87,7 +56,7 @@ const Form3: React.FC<Form3Values> = props => {
 const Page3 = () => {
   return (
     <div>
-      <h1>Validierung basierend auf values</h1>
+      <h1>Cross-Validierung</h1>
       <Form3 />
     </div>
   );

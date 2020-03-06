@@ -1,135 +1,123 @@
-import React from "react";
-import * as yup from "yup";
-import {
-  Field,
-  Form,
-  FormikProps,
-  Formik,
-  FieldArray,
-  ArrayHelpers
-} from "formik";
+import React, { useMemo } from "react";
+import { Field, Form, Formik, FormikProps, useFormikContext } from "formik";
 import ErrorMessage from "./ErrorMessage";
 import { Debug } from "./Debug";
-import { createStyles, makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    friendBox: {
-      border: "1px solid black",
-      margin: "4px",
-      padding: "4px"
-    }
-  })
-);
-
-interface Person {
-  name: string;
-  email?: string;
-}
 
 interface Form5Values {
-  name?: string;
-  friends?: Person[];
+  name: string;
+  email: string;
+  age: number;
 }
 
-const validationSchema = yup.object<Form5Values>({
-  name: yup.string().required("Name benötigt"),
-  friends: yup.array().of(
-    yup.object<Person>({
-      name: yup.string().required("Name benötigt"),
-      email: yup
-        .string()
-        .email("Ungültige Email-Adresse")
-        .notRequired()
-    })
-  )
-});
+interface ReadonlyProp {
+  readonly: boolean;
+}
 
-const Form5: React.FC<Form5Values> = () => {
-  const classes = useStyles();
+interface InputWrapperProps {
+  fieldName: string;
+  label: string;
+  type?: string;
+}
+
+const InputWrapper = (props: InputWrapperProps) => {
+  const { getFieldProps, status, isSubmitting } = useFormikContext();
+  const { fieldName, label, type } = props;
+  const readonlyMode = !!status?.readonly;
+  return (
+    <div>
+      {readonlyMode ? (
+        `${label}: ${getFieldProps(fieldName).value}`
+      ) : (
+        <>
+          <label htmlFor={fieldName}>{label + " "}</label>
+          <Field
+            name={fieldName}
+            type={type || "text"}
+            disabled={isSubmitting}
+          />
+          <ErrorMessage name={fieldName} />
+        </>
+      )}
+    </div>
+  );
+};
+
+const Form5View = (props: FormikProps<Form5Values> & ReadonlyProp) => {
+  const {
+    readonly,
+    status,
+    setStatus,
+    initialStatus,
+    isSubmitting,
+    isValid
+  } = props;
+  useMemo(
+    () =>
+      setStatus({
+        ...initialStatus,
+        readonly: readonly
+      }),
+    [initialStatus, setStatus, readonly]
+  );
+  return (
+    <Form>
+      <InputWrapper fieldName="name" label="Name" />
+      <InputWrapper fieldName="email" label="Email" type="email" />
+      <InputWrapper fieldName="age" label="Alter" type="number" />
+
+      {status?.readonly ? (
+        <button
+          type="button"
+          onClick={event => {
+            event.preventDefault(); // see https://github.com/jaredpalmer/formik/issues/1610
+            setStatus({ readonly: false });
+          }}
+        >
+          Bearbeiten
+        </button>
+      ) : (
+        <button type="submit" disabled={isSubmitting || !isValid}>
+          Speichern
+        </button>
+      )}
+
+      <Debug />
+    </Form>
+  );
+};
+
+const Form5: React.FC<Form5Values & ReadonlyProp> = props => {
+  const { readonly } = props;
   return (
     <Formik
-      initialValues={{}}
-      validateOnMount={true}
-      validationSchema={validationSchema}
+      initialValues={{
+        name: props.name,
+        email: props.email,
+        age: props.age
+      }}
       onSubmit={(values, actions) => {
         setTimeout(() => {
           alert(JSON.stringify(values, null, 2));
           actions.setSubmitting(false);
+          actions.setStatus({ readonly: true }); // https://github.com/jaredpalmer/formik/issues/2303
         }, 2000);
       }}
     >
-      {(props: FormikProps<Form5Values>) => (
-        <Form>
-          <div>
-            <label htmlFor="name">Name </label>
-            <Field name="name" type="text" disabled={props.isSubmitting} />
-            <ErrorMessage name="name" />
-          </div>
-
-          <FieldArray name="friends">
-            {(arrayHelpers: ArrayHelpers) => {
-              const addFriend = async () => {
-                arrayHelpers.push({ name: "", email: "" });
-                setTimeout(async () => await props.validateForm()); // to enforce updating isValid...
-              };
-              const removeFriend = (index: number) =>
-                arrayHelpers.remove(index);
-
-              return (
-                <div>
-                  {props.values.friends?.map((friend, index) => (
-                    <div className={classes.friendBox}>
-                      <div>
-                        <label htmlFor={`friends[${index}].name`}>Name </label>
-                        <Field
-                          name={`friends[${index}].name`}
-                          type="text"
-                          disabled={props.isSubmitting}
-                        />
-                        <ErrorMessage name={`friends[${index}].name`} />
-                      </div>
-                      <div>
-                        <label htmlFor={`friends[${index}].email`}>
-                          Email{" "}
-                        </label>
-                        <Field
-                          name={`friends[${index}].email`}
-                          type="email"
-                          disabled={props.isSubmitting}
-                        />
-                        <ErrorMessage name={`friends[${index}].email`} />
-                      </div>
-                      <button type="button" onClick={() => removeFriend(index)}>
-                        Freund löschen
-                      </button>
-                    </div>
-                  )) || null}
-
-                  <button type="button" onClick={addFriend}>
-                    Neuer Freund
-                  </button>
-                </div>
-              );
-            }}
-          </FieldArray>
-
-          <button type="submit" disabled={props.isSubmitting || !props.isValid}>
-            Speichern
-          </button>
-
-          <Debug />
-        </Form>
-      )}
+      {props => <Form5View {...props} readonly={readonly} />}
     </Formik>
   );
 };
 
 const Page5 = () => {
+  const initialData: Form5Values = {
+    name: "John Doe",
+    email: "john@doe.com",
+    age: 42
+  };
   return (
     <div>
-      <h1>Field Arrays</h1>
-      <Form5 />
+      <h1>Edit/Readonly Form</h1>
+      <Form5 {...initialData} readonly={true} />
     </div>
   );
 };

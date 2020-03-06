@@ -3,26 +3,25 @@ import { Field, Form, FormikProps, Formik } from "formik";
 import ErrorMessage from "./ErrorMessage";
 import { Debug } from "./Debug";
 import * as yup from "yup";
-import { Divider } from "@material-ui/core";
 
 interface Form2Values {
   name?: string;
+  emailRequired?: boolean;
   email?: string;
   age?: number;
 }
 
-type Form2Props = Form2Values & {
-  emailRequired?: boolean;
-};
-const Form2: React.FC<Form2Props> = props => {
+const Form2: React.FC<Form2Values> = props => {
   const validationSchema = yup.object().shape({
     name: yup.string().required("Name benötigt"),
-    email: props.emailRequired
-      ? yup
-          .string()
-          .email("Ungültige Email-Adresse")
-          .required("Email-Adresse benötigt")
-      : yup.string().email("Ungültige Email-Adresse"),
+    email: yup.mixed().when("emailRequired", (emailRequired: boolean) =>
+      emailRequired
+        ? yup
+            .string()
+            .email("Ungültige Email-Adresse")
+            .required("Email-Adresse benötigt")
+        : yup.string().email("Ungültige Email-Adresse")
+    ),
     age: yup
       .number()
       .typeError("Zahl erwartet")
@@ -45,12 +44,21 @@ const Form2: React.FC<Form2Props> = props => {
         }, 2000);
       }}
     >
-      {(props: FormikProps<Form2Props>) => (
+      {(props: FormikProps<Form2Values>) => (
         <Form>
           <div>
             <label htmlFor="name">Name </label>
             <Field name="name" type="text" disabled={props.isSubmitting} />
             <ErrorMessage name="name" />
+          </div>
+
+          <div>
+            <label htmlFor="emailRequired">Email benötigt? </label>
+            <Field
+              name="emailRequired"
+              type="checkbox"
+              disabled={props.isSubmitting}
+            />
           </div>
 
           <div>
@@ -79,15 +87,8 @@ const Form2: React.FC<Form2Props> = props => {
 const Page2 = () => {
   return (
     <div>
-      <h1>Validierung basierend auf props</h1>
-      <Divider />
-
-      <h2>Email benötigt</h2>
-      <Form2 emailRequired={true} />
-      <Divider />
-
-      <h2>Email nicht benötigt</h2>
-      <Form2 emailRequired={false} />
+      <h1>Validierung basierend auf values</h1>
+      <Form2 />
     </div>
   );
 };

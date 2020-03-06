@@ -1,26 +1,57 @@
 import React from "react";
-import { Field, Form, FormikProps, Formik } from "formik";
+import * as yup from "yup";
+import {
+  Field,
+  Form,
+  FormikProps,
+  Formik,
+  FieldArray,
+  ArrayHelpers
+} from "formik";
 import ErrorMessage from "./ErrorMessage";
 import { Debug } from "./Debug";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
 
-interface Form4Values {
-  bool1?: boolean;
-  bool2?: boolean;
+const useStyles = makeStyles(() =>
+  createStyles({
+    friendBox: {
+      border: "1px solid black",
+      margin: "4px",
+      padding: "4px"
+    }
+  })
+);
+
+interface Person {
+  name: string;
+  email?: string;
 }
 
+interface Form4Values {
+  name?: string;
+  friends?: Person[];
+}
+
+const validationSchema = yup.object<Form4Values>({
+  name: yup.string().required("Name benötigt"),
+  friends: yup.array().of(
+    yup.object<Person>({
+      name: yup.string().required("Name benötigt"),
+      email: yup
+        .string()
+        .email("Ungültige Email-Adresse")
+        .notRequired()
+    })
+  )
+});
+
 const Form4: React.FC<Form4Values> = () => {
+  const classes = useStyles();
   return (
     <Formik
       initialValues={{}}
       validateOnMount={true}
-      validate={(values: Form4Values) => {
-        return (values.bool1 && values.bool2) ||
-          (!values.bool1 && !values.bool2)
-          ? {
-              bool1: "Es muss genau eins der beiden Felder aktiv sein"
-            }
-          : undefined;
-      }}
+      validationSchema={validationSchema}
       onSubmit={(values, actions) => {
         setTimeout(() => {
           alert(JSON.stringify(values, null, 2));
@@ -31,16 +62,57 @@ const Form4: React.FC<Form4Values> = () => {
       {(props: FormikProps<Form4Values>) => (
         <Form>
           <div>
-            <label htmlFor="bool1">Bool1 </label>
-            <Field name="bool1" type="checkbox" disabled={props.isSubmitting} />
-            <ErrorMessage name="bool1" />
+            <label htmlFor="name">Name </label>
+            <Field name="name" type="text" disabled={props.isSubmitting} />
+            <ErrorMessage name="name" />
           </div>
 
-          <div>
-            <label htmlFor="bool2">Bool2 </label>
-            <Field name="bool2" type="checkbox" disabled={props.isSubmitting} />
-            <ErrorMessage name="bool2" />
-          </div>
+          <FieldArray name="friends">
+            {(arrayHelpers: ArrayHelpers) => {
+              const addFriend = async () => {
+                arrayHelpers.push({ name: "", email: "" });
+                setTimeout(async () => await props.validateForm()); // to enforce updating isValid...
+              };
+              const removeFriend = (index: number) =>
+                arrayHelpers.remove(index);
+
+              return (
+                <div>
+                  {props.values.friends?.map((friend, index) => (
+                    <div className={classes.friendBox}>
+                      <div>
+                        <label htmlFor={`friends[${index}].name`}>Name </label>
+                        <Field
+                          name={`friends[${index}].name`}
+                          type="text"
+                          disabled={props.isSubmitting}
+                        />
+                        <ErrorMessage name={`friends[${index}].name`} />
+                      </div>
+                      <div>
+                        <label htmlFor={`friends[${index}].email`}>
+                          Email{" "}
+                        </label>
+                        <Field
+                          name={`friends[${index}].email`}
+                          type="email"
+                          disabled={props.isSubmitting}
+                        />
+                        <ErrorMessage name={`friends[${index}].email`} />
+                      </div>
+                      <button type="button" onClick={() => removeFriend(index)}>
+                        Freund löschen
+                      </button>
+                    </div>
+                  )) || null}
+
+                  <button type="button" onClick={addFriend}>
+                    Neuer Freund
+                  </button>
+                </div>
+              );
+            }}
+          </FieldArray>
 
           <button type="submit" disabled={props.isSubmitting || !props.isValid}>
             Speichern
@@ -56,7 +128,7 @@ const Form4: React.FC<Form4Values> = () => {
 const Page4 = () => {
   return (
     <div>
-      <h1>Cross-Validierung</h1>
+      <h1>Field Arrays</h1>
       <Form4 />
     </div>
   );
