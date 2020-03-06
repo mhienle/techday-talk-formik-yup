@@ -54,11 +54,12 @@
     * Helpers for syncing/reading/updating state, errors, ...
       * `setFieldValue`
       * `setFieldError`
-      * `setFieldTouched`
+      * `setStatus`
       * `resetForm`
       * ...
     * Sensible defaults
     * `yup` as `formik`'s _recommended_ (not required) solution for form validation
+      * Extending `yup`: [`yup.addMethod`](https://github.com/jquense/yup#yupaddmethodschematype-schema-name-string-method--schema-void)
 </section>
 
 <section data-markdown>
@@ -71,7 +72,6 @@
       * [built on React hooks, requires React >= 16.8](https://github.com/jaredpalmer/formik/blob/master/packages/formik/MIGRATING-v2.md)
       * includes hooks
     * Performance: [react-hook-form claims to render less often](https://blog.logrocket.com/react-hook-form-vs-formik-a-technical-and-performance-comparison/)
-    * Enhance `yup` with custom methods: [`yup.addMethod`](https://github.com/jquense/yup#yupaddmethodschematype-schema-name-string-method--schema-void)
     * Combining formik with component libraries may be hard
 </section>
 
